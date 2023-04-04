@@ -1,3 +1,5 @@
+import java.util.Stack
+
 class WaveFunctionCollapse {
 	private val grid = Grid()
 
@@ -54,11 +56,17 @@ class WaveFunctionCollapse {
 	}
 
 	private fun collapseAt(point: Point) {
-
+		val possibleStates = this.getPossibleStatesOf(point)
+		this.grid.set(point, possibleStates.random())
 	}
 
 	private fun propagateChangesFrom(point: Point) {
+		val toVisit = Stack<Point>()
+		toVisit.push(point)
 
+		while (toVisit.isNotEmpty()) {
+			val currentPoint = toVisit.pop()
+		}
 	}
 
 	data class Point(
@@ -74,6 +82,10 @@ class WaveFunctionCollapse {
 
 		fun get(point: Point): Int =
 			this.grid[point.y][point.x]
+
+		fun set(point: Point, value: Int) {
+			this.grid[point.y][point.x] = value
+		}
 
 		fun isCollapsed(): Boolean {
 			return this.grid.none { row ->
